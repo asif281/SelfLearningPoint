@@ -1,0 +1,45 @@
+﻿
+                            -------- WebApplication.CreateBuilder(args); ------------
+
+
+What is IWebHost?
+
+
+        1. The web host is the general thing that hosts and runs your web application. 
+
+        2. It gets created when your application starts up, and then it will construct all the necessary pieces, 
+           like 
+		        the Kestrel web server, 
+		        the application middleware pipeline, 
+		        and all the other bits, 
+	            and connects them, so that your application is ready to serve your requests.
+
+        3. The web host is basically the thing that makes up your web application.
+
+What is IWebHostBuilder?
+
+
+        1.  The web host builder is basically a factory to create a web host. 
+        2.  It is the thing that constructs the web host but also configures all the necessay bits 
+            the web host needs to determine how to run the web application.
+        3.  With ASP.NET Core 2, you will usually create a “default web host builder” which will already come with a lot defaults.
+            For example, the default web host will set up the Kestrel web server, enable and configure logging, and add support for the appsettings.json configuration.
+
+        Usually, your applications will always start with such a default web host and you then just use the web host builder to subsequently configure the web host before it is actually being built.
+
+           // main entry point for your application
+            public static void Main(string[] args)
+            {
+                // create the web host builder
+                CreateWebHostBuilder(args)
+                    // build the web host
+                    .Build()
+                    // and run the web host, i.e. your web application
+                    .Run();
+            }
+
+            public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+                // create a default web host builder, with the default settings and configuration
+                WebHost.CreateDefaultBuilder(args)
+                    // configure it to use your `Startup` class
+                    .UseStartup<Startup>();
