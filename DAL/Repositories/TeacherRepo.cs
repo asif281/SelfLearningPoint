@@ -1,13 +1,8 @@
 ﻿using DomainModels;
 using DTOs;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
@@ -23,9 +18,13 @@ namespace DAL.Repositories
         #region Public Region
         public void addTeacher(TeacherDTO teacherDTO)
         {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             Teacher teacher = SetTeacherEntity(teacherDTO);
-            string connectionString = Configuration["ConnectionStrings:DefaultConnection"];          
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+            string connectionString = Configuration["ConnectionStrings:DefaultConnection"];
+#pragma warning disable CS8604 // Possible null reference argument.
             teacherAdd(connectionString, teacher);
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         public List<TeacherDTO> displayTeacher()
@@ -38,7 +37,9 @@ namespace DAL.Repositories
         {
             string connectionString = Configuration["ConnectionStrings:DefaultConnection"];
 
-            teacherUpdate(connectionString, SetTeacherEntity(teacherDTO));
+#pragma warning disable CS8604 // Possible null reference argument.
+            teacherUpdate(connectionString, teacher: SetTeacherEntity(teacherDTO));
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         public void removeTeacher(int Id)
@@ -60,7 +61,7 @@ namespace DAL.Repositories
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"Insert Into Teacher (Name, Skills, TotalStudents, Salary) Values ('{teacher.Name}', '{teacher.Skills}','{teacher.TotalStudents}','{teacher.Salary}')";
+                string sql = $"Insert Into Teacher (Name, Skills, TotalStudents, Salary, AddedOn) Values ('{teacher.Name}', '{teacher.Skills}','{teacher.TotalStudents}','{teacher.Salary}', '{teacher.AddedOn}')";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -91,8 +92,12 @@ namespace DAL.Repositories
                     {
                         Teacher teacher = new Teacher();
                         teacher.Id = Convert.ToInt32(dataReader["Id"]);
+#pragma warning disable CS8601 // Possible null reference assignment.
                         teacher.Name = Convert.ToString(dataReader["Name"]);
+#pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning disable CS8601 // Possible null reference assignment.
                         teacher.Skills = Convert.ToString(dataReader["Skills"]);
+#pragma warning restore CS8601 // Possible null reference assignment.
                         teacher.TotalStudents = Convert.ToInt32(dataReader["TotalStudents"]);
                         teacher.Salary = Convert.ToDecimal(dataReader["Salary"]);
                         teacher.AddedOn = Convert.ToDateTime(dataReader["AddedOn"]);
@@ -103,7 +108,7 @@ namespace DAL.Repositories
 
                 connection.Close();
 
-                return (List<TeacherDTO>)teacherList.Select(x => SetTeacherDTO(x)).ToList();
+                return teacherList.Select(x => SetTeacherDTO(x)).ToList() as List<TeacherDTO>;
             }
         }
 
@@ -161,11 +166,15 @@ namespace DAL.Repositories
                     while (dataReader.Read())
                     {
                         teacherDTO.Id = Convert.ToInt32(dataReader["Id"]);
+#pragma warning disable CS8601 // Possible null reference assignment.
                         teacherDTO.Name = Convert.ToString(dataReader["Name"]);
+#pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning disable CS8601 // Possible null reference assignment.
                         teacherDTO.Skills = Convert.ToString(dataReader["Skills"]);
+#pragma warning restore CS8601 // Possible null reference assignment.
                         teacherDTO.TotalStudents = Convert.ToInt32(dataReader["TotalStudents"]);
                         teacherDTO.Salary = Convert.ToDecimal(dataReader["Salary"]);
-                        teacherDTO.AddedOn = Convert.ToDateTime(dataReader["AddedOn"]);
+                        teacherDTO.AddedOn = Convert.ToDateTime(dataReader?["AddedOn"]);
                     }
                 }
 
@@ -173,7 +182,7 @@ namespace DAL.Repositories
             }
             return teacherDTO;
         }
-        private Teacher SetTeacherEntity(TeacherDTO teacherDTO)
+        private Teacher? SetTeacherEntity(TeacherDTO teacherDTO)
         {
             if (teacherDTO != null)
             {
@@ -189,7 +198,7 @@ namespace DAL.Repositories
             return null;
         }
 
-        private TeacherDTO SetTeacherDTO(Teacher teacher)
+        private TeacherDTO? SetTeacherDTO(Teacher teacher)
         {
             if (teacher != null)
             {

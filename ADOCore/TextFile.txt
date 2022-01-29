@@ -1,0 +1,10 @@
+﻿
+Create table Teacher
+(
+ Id int not null primary key,
+ Name nvarchar ,
+ Skills nvarchar,
+ TotalStudents int,
+ Salary decimal ,
+ AddedOn Date
+ )

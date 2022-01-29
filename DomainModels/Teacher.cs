@@ -20,6 +20,6 @@ namespace DomainModels
         [Required]
         public decimal Salary { get; set; }
 
-        public DateTime AddedOn { get; set; }
+        public DateTime? AddedOn { get; set; }
     }
 }
