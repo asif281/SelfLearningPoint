@@ -1,0 +1,21 @@
+﻿
+What is FrameWork?
+
+1.  Set of tools used by many successful coding teams.
+
+2.  A platform for developing software applications.
+
+3.  It include predefined classes and functions that can be used to process input, manage hardware devices,
+    and interact with system software. 
+
+2.  Example: An example of a framework is an outline created before writing an essay.
+
+
+What is Entity Framework?
+
+1. EF is an ORM (Object Relational Mapping) tool. 
+
+2. Object Relational Mapping (ORM) is a technique of accessing a relational database.
+
+3  We interact with database in class, method and property of the object format.
+
