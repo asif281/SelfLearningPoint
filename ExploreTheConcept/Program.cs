@@ -1,3 +1,5 @@
 // See https://aka.ms/new-console-template for more information
 
-Console.WriteLine("Hello, Asif!");
+
+if(true)
+    Console.WriteLine("Hello, Asif!");
