@@ -55,7 +55,6 @@ namespace DAL.Repositories
 
         #endregion
 
-
         #region Private Methods
         private void teacherAdd(string connectionString, Teacher teacher)
         {
