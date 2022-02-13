@@ -1,0 +1,11 @@
+﻿
+What is LINQ?
+	
+	LINQ (Language Integrated Query) is uniform query syntax in C# to retrieve data from different sources and formats.
+
+	For example, SQL is a Structured Query Language used to save and retrieve data from a database. 
+	In the same way, LINQ is a structured query syntax built in C# to retrieve data from different types of data sources
+	such as,
+		collections, ADO.Net DataSet, XML Docs, web service and MS SQL Server and other databases.
+	
+	LINQ queries return results as objects.
